@@ -1,12 +1,10 @@
-import java.util.concurrent.Semaphore;
 
-class hwk45 {
+class hwk45 extends Thread {
+    public static Double[][] Bn;
     public static WorkerThreads workerThreads;
     public static ThreadsThatNormalizeArray threadNormalize;
 
     public static void main(String[] args) {
-        Semaphore lock = new Semaphore(1);
-
         // TODO have this read in by the command line
         // Note there are 10 rows so there should be 10 threads created
         Integer[][] B = {
@@ -22,17 +20,31 @@ class hwk45 {
                 { 11, 18, 100, 77, 84, 36, 43, 50, 27, 59 },
         };
 
-        createThreads(B, lock);
+        createThreads(B);
+
+        printArray();
+
     }
 
-    public static void createThreads(Integer[][] B, Semaphore lock) {
+    public static void createThreads(Integer[][] B) {
         // Create a n number of threads
         int numberOfRows = B.length;
 
         // TODO find a way to wait until threads find max have finished
         for (int i = 0; i < numberOfRows; i++) {
-            workerThreads = new WorkerThreads(lock, i, B);
+            workerThreads = new WorkerThreads(i, B);
             workerThreads.start();
+        }
+    }
+
+    public static void printArray() {
+        if (!workerThreads.isAlive()) {
+            for (int i = 0; i < Bn.length; i++) {
+                for (int j = 0; j < Bn.length; j++) {
+                    System.out.print(String.format("%.6f", Bn[i][j]) + " ");
+                }
+                System.out.println();
+            }
         }
     }
 }
