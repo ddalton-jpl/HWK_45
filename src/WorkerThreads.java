@@ -10,7 +10,6 @@ public class WorkerThreads extends hwk45 {
 
     static Integer maxB = Integer.MIN_VALUE;
     private CyclicBarrier barrier1 = new CyclicBarrier(1);
-    private CyclicBarrier barrier2 = new CyclicBarrier(1);
     private int row;
 
     public WorkerThreads(int row, Integer[][] B) {
@@ -29,27 +28,27 @@ public class WorkerThreads extends hwk45 {
         System.out.println("The max value in row " + row + " is " + regional_maxValue);
 
         maxB = Math.max(maxB, regional_maxValue);
+
     }
 
-    public void normalize() {
-        Bn = new Double[B.length][B.length];
+    public synchronized void normalize() {
 
-        for (int i = row, j = 0; j < Bn[row].length; j++) {
-            Bn[i][j] = (Double) ((1.0 * B[i][j]) / maxB);
+        Double[][] Bn = new Double[B.length][B.length];
+
+        for (int j = 0; j < Bn[row].length; j++) {
+            Bn[row][j] = (Double) ((1.0 * B[row][j]) / maxB);
+            System.out.println(String.format("%.6f", Bn[row][j]) + " ");
+
         }
     }
 
     @Override
     public void run() {
+
+        findMax();
+
         try {
-
-            findMax();
-
             barrier1.await();
-
-            normalize();
-
-            barrier2.await();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -57,5 +56,7 @@ public class WorkerThreads extends hwk45 {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        normalize();
     }
 }

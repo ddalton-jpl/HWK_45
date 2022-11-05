@@ -1,6 +1,5 @@
 
 class hwk45 extends Thread {
-    public static Double[][] Bn;
     public static WorkerThreads workerThreads;
     public static ThreadsThatNormalizeArray threadNormalize;
 
@@ -21,9 +20,6 @@ class hwk45 extends Thread {
         };
 
         createThreads(B);
-
-        printArray();
-
     }
 
     public static void createThreads(Integer[][] B) {
@@ -34,17 +30,6 @@ class hwk45 extends Thread {
         for (int i = 0; i < numberOfRows; i++) {
             workerThreads = new WorkerThreads(i, B);
             workerThreads.start();
-        }
-    }
-
-    public static void printArray() {
-        if (!workerThreads.isAlive()) {
-            for (int i = 0; i < Bn.length; i++) {
-                for (int j = 0; j < Bn.length; j++) {
-                    System.out.print(String.format("%.6f", Bn[i][j]) + " ");
-                }
-                System.out.println();
-            }
         }
     }
 }
