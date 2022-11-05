@@ -1,7 +1,6 @@
 
-class hwk45 extends Thread {
+class Tester extends Thread {
     public static WorkerThreads workerThreads;
-    public static ThreadsThatNormalizeArray threadNormalize;
 
     public static void main(String[] args) {
         // TODO have this read in by the command line

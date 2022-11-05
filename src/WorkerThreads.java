@@ -4,7 +4,7 @@ import java.util.concurrent.CyclicBarrier;
 // TODO solve this on paper first
 // TODO use a cyclic barrier to synchronize the threads and wait for array to be normalized
 
-public class WorkerThreads extends hwk45 {
+public class WorkerThreads extends Tester {
     public static Integer[][] B;
     public static Boolean maxFound = false;
 
